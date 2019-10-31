@@ -3,7 +3,7 @@
 #define USR_CONFIG
 
 bool isNegativeMap[] = {
-    true,  // char
+    false, // char
     true,  // signed char
     true,  // short
     true,  // short int
@@ -17,7 +17,7 @@ bool isNegativeMap[] = {
     true,  // long
     true,  // long int
     true,  // signed long
-    true,  // signed long intp
+    true,  // signed long int
     false, // unsigned long
     false, // unsigned long int
     true,  // long long
@@ -58,42 +58,41 @@ bool isFloatMap[] = {
     true,  // double
 };
 
-unsigned long long int maxPositiveValueMap[] = {
-    255,                  // char
-    127,                  // signed char
-    32767,                // short
-    32767,                // short int
-    32767,                // signed short
-    32767,                // signed short int
-    65535,                // unsigned short
-    65535,                // unsigned short int
-    2147483647,           // int
-    2147483647,           // signed int
-    4294967295,           // unsigned int
-    2147483647,           // long
-    2147483647,           // long int
-    2147483647,           // signed long
-    2147483647,           // signed long int
-    4294967295,           // unsigned long
-    4294967295,           // unsigned long int
-    9223372036854775807,  // long long
-    9223372036854775807,  // long long int
-    9223372036854775807,  // signed long long
-    9223372036854775807,  // signed long long int
-    18446744073709551615, // unsigned long long
-    18446744073709551615, // unsigned long long int
-    2147483647,           // float
-    4294967295,           // double
+short varSize[] = {
+    sizeof(char),
+    sizeof(signed char),
+    sizeof(short),
+    sizeof(short int),
+    sizeof(signed short),
+    sizeof(signed short int),
+    sizeof(unsigned short),
+    sizeof(unsigned short int),
+    sizeof(int),
+    sizeof(signed int),
+    sizeof(unsigned int),
+    sizeof(long),
+    sizeof(long int),
+    sizeof(signed long),
+    sizeof(signed long int),
+    sizeof(unsigned long),
+    sizeof(unsigned long int),
+    sizeof(long long),
+    sizeof(long long int),
+    sizeof(signed long long),
+    sizeof(signed long long int),
+    sizeof(unsigned long long),
+    sizeof(unsigned long long int),
+    sizeof(float),
+    sizeof(double),
 };
 
 short dataTypeIndex = 0;
 
-unsigned long long int maxDecimalValue = 18446744073709351615;
 bool mayBeNegative = true;
 bool mayBeFloat = true;
 
-short base = 25;
+short base = 36;
 char input[10000] = {'\0'};
-bool isNegative = false;
+bool isNegative = true;
 
 #endif

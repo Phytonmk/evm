@@ -14,6 +14,8 @@ void printLabel(char label[], int x, int y)
     }
 }
 
+int step = 0;
+
 int maxDataType = 24;
 void promptDataType()
 {
@@ -28,7 +30,7 @@ void promptDataType()
                 printLabel(emptyString, x, y);
             }
         }
-        char label0[] = {'S', 'e', 'l', 'e', 'c', 't', ' ', 'd', 'a', 't', 'a', ' ', 't', 'y', 'p', 'e', ':'};
+        char label0[] = {'S', 'e', 'l', 'e', 'c', 't', ' ', 'd', 'a', 't', 'a', ' ', 't', 'y', 'p', 'e', ':', '\0'};
         printLabel(label0, 0, 0);
         char label1[] = {'c', 'h', 'a', 'r', '\0'};
         printLabel(label1, 2, 2);
@@ -106,98 +108,86 @@ void promptDataType()
         }
         mayBeNegative = isNegativeMap[dataTypeIndex];
         mayBeFloat = isFloatMap[dataTypeIndex];
-        maxDecimalValue = maxPositiveValueMap[dataTypeIndex];
         if (inputKey == '\n')
         {
+            step = 1;
             return;
         }
     }
 }
 
-bool isInputValid = true;
+int inputLength = 0;
+
+bool isInputValid = false;
 void render()
 {
     std::system("clear");
 
     char decimal[10000] = {'\0'};
     char binary[10000] = {'\0'};
-    toDecimal(input, decimal, base);
-    toBinary(input, binary, base);
+    moveCursor(0, 10);
+
+    changeRadix(input, decimal, binary);
     char label1[] = {'I', 'n', 'p', 'u', 't', ' ', 'n', 'u', 'm', 'b', 'e', 'r', ':', ' ', '\0'};
     printLabel(label1, 0, 1);
-    int intputLength = 0;
-    while (input[intputLength] != '\0')
-        intputLength++;
-    int decimalLength = 0;
-    while (decimal[decimalLength] != '\0')
-        decimalLength++;
-    int binaryLength = 0;
-    while (binary[binaryLength] != '\0')
-        binaryLength++;
-    char clearedInput[10000] = {'\0'};
-    int mantissa = 0;
-    extractMantissa(input, clearedInput, &mantissa);
-    unsigned long long decimalInputValue = convToDecNum(clearedInput, base);
-    int maxInputLength = getValueLength(maxDecimalValue, base);
-    int maxDecimalLength = getValueLength(maxDecimalValue, 10);
-    int maxBinaryLength = getValueLength(maxDecimalValue, 2);
-    if (mantissa > 0)
+
+    for (int i = 0; input[i] != '\0'; i++)
     {
-        maxInputLength++;
-        maxDecimalLength++;
-        maxBinaryLength++;
-    }
-    int maxLength = maxInputLength;
-    if (maxDecimalLength > maxLength)
-        maxLength = maxDecimalLength;
-    if (maxBinaryLength > maxLength)
-        maxLength = maxBinaryLength;
-    for (int i = 0; i < maxInputLength; i++)
-    {
-        moveCursor(maxLength - maxInputLength + i + 16, 1);
-        if (i >= maxInputLength - intputLength)
-            putchar(input[i - (maxInputLength - intputLength)]);
-        else
-            putchar('0');
+        moveCursor(i + 16, 1);
+        putchar(input[i]);
     }
     if (isInputValid)
     {
         char label2[] = {'D', 'e', 'c', 'i', 'm', 'a', 'l', ':', ' ', '\0'};
         printLabel(label2, 0, 2);
 
-        for (int i = 0; i < maxDecimalLength; i++)
+        for (int i = 0; i < decimal[i] != '\0'; i++)
         {
-            moveCursor(maxLength - maxDecimalLength + i + 16, 2);
-            if (i >= maxDecimalLength - decimalLength)
-                putchar(decimal[i - (maxDecimalLength - decimalLength)]);
-            else
-                putchar('0');
+            moveCursor(i + 16, 2);
+            putchar(decimal[i]);
         }
         char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
         printLabel(label3, 0, 3);
-        for (int i = 0; i < maxBinaryLength; i++)
-        {
-            moveCursor(maxLength - maxBinaryLength + i + 16, 3);
-            if (i >= maxBinaryLength - binaryLength)
-                putchar(binary[i - (maxBinaryLength - binaryLength)]);
-            else
-                putchar('0');
-        }
+        moveCursor(16, 3);
+        std::cout << binary;
+        // for (int i = 0; binary[i] != '\0'; i++)
+        // {
+        //     moveCursor(i + 16, 3);
+        //     putchar(binary[i]);
+        // }
     }
     if (isNegative)
     {
-        moveCursor(maxLength - maxInputLength + 15, 1);
+        moveCursor(15, 1);
         putchar('-');
-
-        if (isInputValid)
+        // if (isInputValid)
+        // {
+        //     moveCursor(15, 2);
+        //     putchar('-');
+        // moveCursor(16, 3);
+        // putchar('1');
+        // }
+    }
+    char label4[] = {'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', ' ', 's', 'y', 'm', 'b', 'o', 'l', 's', ':', '\0'};
+    printLabel(label4, 0, 5);
+    for (int i = 0; i < base; i++)
+    {
+        moveCursor(i * 2, 6);
+        if (i < 10)
         {
-            moveCursor(maxLength - maxDecimalLength + 15, 2);
-            putchar('-');
-            moveCursor(maxLength - maxBinaryLength + 15, 3);
-            putchar('-');
+            putchar(i + '0');
+        }
+        else
+        {
+            putchar(i - 10 + 'A');
         }
     }
-    moveCursor(maxLength + 16, 1);
+    char label5[] = {'I', 'n', 'p', 'u', 't', ' ', 'n', 'u', 'm', 'b', 'e', 'r', ' ', 'b', 'a', 's', 'e', ':', '\0'};
+    printLabel(label5, 0, 7);
+    moveCursor(0, 8);
+    std::cout << base;
+
+    moveCursor(16 + inputLength, 1);
 }
 
 void getBase()
@@ -209,12 +199,24 @@ void getBase()
     int secondChar = '\0';
     int firstChar = '\0';
     moveCursor(13, 0);
-    while (!(firstChar >= '0' && firstChar <= '3'))
+    while (!(firstChar >= '1' && firstChar <= '9') && firstChar != '\t')
         firstChar = getch();
     putchar(firstChar);
+    base = (firstChar - '0');
+    if (firstChar == '\t')
+    {
+        step = 0;
+        return;
+    }
     moveCursor(14, 0);
-    while (!(secondChar >= '0' && ((firstChar == '3' && secondChar <= '6') || (firstChar != '3' && secondChar <= '9'))))
+
+    while (!(secondChar >= '0' && ((firstChar == '3' && secondChar <= '6') || (firstChar != '3' && secondChar <= '9'))) && (secondChar != '\n' || base == 1) && secondChar != '\t')
         secondChar = getch();
+    if (secondChar == '\t')
+    {
+        step = 0;
+        return;
+    }
     if (secondChar == '\n')
     {
         return;
@@ -223,74 +225,99 @@ void getBase()
     base = (firstChar - '0') * 10 + (secondChar - '0');
     while (getch() != '\n')
         ;
+    step = 2;
 }
 
 int main()
 {
-    // double foo;
-    // std::cout << sizeof(foo) << '\n';
-    // std::cin >> foo;
-    // std::cout << foo << '\n';
-    // return 0;
-    promptDataType();
-    getBase();
     char inputSymbol = '0';
-    int inputLength = 0;
     int floatDelimeter = -1;
+
+    while (input[inputLength] != '\0')
+    {
+        inputLength++;
+    }
+
     while (true)
     {
-        render();
-        inputSymbol = getch();
-        if (inputSymbol == '\n')
+        if (step == 0)
         {
-            moveCursor(0, 4);
-            break;
+            promptDataType();
         }
-        else if (inputSymbol == 127)
+        else if (step == 1)
         {
-            if (inputLength > 0)
-            {
-                inputLength--;
-            }
-            if (floatDelimeter >= inputLength)
-            {
-                floatDelimeter = -1;
-            }
-            input[inputLength] = '\0';
-        }
-        else if (mayBeNegative && inputSymbol == '-')
-        {
-            isNegative = !isNegative;
-        }
-        else if ((inputSymbol >= '0' && (inputSymbol - '0' < base)) || (inputSymbol >= 'a' && inputSymbol - 'a' < base - 10))
-        {
-            input[inputLength] = inputSymbol;
-            input[inputLength + 1] = '\0';
-            inputLength++;
-        }
-        else if (mayBeFloat && (inputSymbol == '.' || inputSymbol == ',') && ((inputLength > 0 && input[0] != '-') || inputLength > 1) && floatDelimeter == -1)
-        {
-            floatDelimeter = inputLength;
-            input[inputLength] = '.';
-            input[inputLength + 1] = '\0';
-            inputLength++;
-        }
-        char clearedInput[10000] = {'\0'};
-        int mantissa = 0;
-        extractMantissa(input, clearedInput, &mantissa);
-        unsigned long long decimalInputValue = convToDecNum(clearedInput, base);
-        if (decimalInputValue > maxDecimalValue && inputLength > 0)
-        {
-            inputLength--;
-            input[inputLength] = '\0';
-        }
-        if (inputLength == floatDelimeter + 1)
-        {
+            getBase();
+            inputLength = 0;
+            input[0] = '\0';
+            isNegative = false;
+            floatDelimeter = -1;
             isInputValid = false;
         }
-        else
+        else if (step == 2)
         {
-            isInputValid = true;
+            render();
+            inputSymbol = getch();
+            if (inputSymbol == '\t')
+            {
+                std::system("clear");
+                step = 1;
+                continue;
+            }
+            else if (inputSymbol == '\n')
+            {
+                std::system("clear");
+                moveCursor(0, 0);
+                std::cout << "Restart/Exit (r/e)? ";
+                while (inputSymbol != 'r' && inputSymbol != 'e')
+                    inputSymbol = getch();
+                if (inputSymbol == 'r')
+                {
+                    step = 0;
+                    continue;
+                }
+                else
+                {
+                    std::system("clear");
+                    break;
+                }
+            }
+            else if (inputSymbol == 127)
+            {
+                if (inputLength > 0)
+                {
+                    inputLength--;
+                }
+                if (floatDelimeter >= inputLength)
+                {
+                    floatDelimeter = -1;
+                }
+                input[inputLength] = '\0';
+            }
+            else if (mayBeNegative && inputSymbol == '-')
+            {
+                isNegative = !isNegative;
+            }
+            else if ((inputSymbol >= '0' && (inputSymbol - '0' < base)) || (inputSymbol >= 'a' && inputSymbol - 'a' < base - 10))
+            {
+                input[inputLength] = inputSymbol;
+                input[inputLength + 1] = '\0';
+                inputLength++;
+            }
+            else if (mayBeFloat && (inputSymbol == '.' || inputSymbol == ',') && ((inputLength > 0 && input[0] != '-') || inputLength > 1) && floatDelimeter == -1)
+            {
+                floatDelimeter = inputLength;
+                input[inputLength] = '.';
+                input[inputLength + 1] = '\0';
+                inputLength++;
+            }
+            if (inputLength == floatDelimeter + 1)
+            {
+                isInputValid = false;
+            }
+            else
+            {
+                isInputValid = true;
+            }
         }
     }
     return 0;
