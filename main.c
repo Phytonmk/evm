@@ -3,6 +3,7 @@
 #include "getch/getch.h"
 #include "cursor/cursor.h"
 #include "showAnimatedLabel/showAnimatedLabel.h"
+#include "coloredOutput/coloredOutput.h"
 #include "changeRadix/changeRadix.h"
 #include <iostream>
 
@@ -170,8 +171,7 @@ void render()
         char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
         printLabel(label3, 0, 3);
 
-        moveCursor(16, 3);
-        std::cout << binary << std::flush;
+        coloredOutput(binary, 16, 3);
         showAnimatedLabel(decimal, 16, 2);
         // for (int i = 0; i < decimal[i] != '\0'; i++)
         // {
