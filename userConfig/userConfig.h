@@ -2,6 +2,8 @@
 
 #define USR_CONFIG
 
+#include <string>
+
 bool isNegativeMap[] = {
     false, // char
     true,  // signed char
@@ -58,6 +60,34 @@ bool isFloatMap[] = {
     true,  // double
 };
 
+std::string dataTypeNames[] = {
+    "char",
+    "signed char",
+    "short",
+    "short int",
+    "signed short",
+    "signed short int",
+    "unsigned short",
+    "unsigned short int",
+    "int",
+    "signed int",
+    "unsigned int",
+    "long",
+    "long int",
+    "signed long",
+    "signed long int",
+    "unsigned long",
+    "unsigned long int",
+    "long long",
+    "long long int",
+    "signed long long",
+    "signed long long int",
+    "unsigned long long",
+    "unsigned long long int",
+    "float",
+    "double",
+};
+
 short varSize[] = {
     sizeof(char),
     sizeof(signed char),
@@ -86,21 +116,22 @@ short varSize[] = {
     sizeof(double),
 };
 
-short dataTypeIndex = 5;
+short dataTypeIndex = 0;
 
 bool mayBeNegative = true;
 bool mayBeFloat = true;
 
 short base = 10;
-int inputLength = 0;
-char input[10000] = {'1', '2', '3', '\0'};
+char input[10000] = {'\0'};
 bool isNegative = false;
-int step = 2;
-bool isInputValid = true;
-int chartScaling = 20;
 
+int inputLength = 0;
+int step = 0;
+bool isInputValid = false;
+
+int chartScaling = 20;
 bool animationEnabled = false;
-int invertFrom = 3;
-int invertCount = 5;
+int invertFrom = 0;
+int invertCount = 0;
 
 #endif

@@ -12,13 +12,16 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
    if (length == 0)
       return;
 
-
    int lastX = 0;
-   for (int i = 1; i <= length ; i++) {
-      int currentX = float(i) * 2 * scale;
-      for (int x = lastX; x < currentX; x++) {
-         if (i != 0 && x == lastX && (*(binary + i) != *(binary + i - 1))) {
-            if (*(binary + i) == '0') {
+   for (int i = 0; i <= length; i++)
+   {
+      int currentX = float(i + 1) * 2 * scale;
+      for (int x = lastX; x < currentX; x++)
+      {
+         if (i != 0 && x == lastX && (*(binary + i) != *(binary + i - 1)))
+         {
+            if (*(binary + i) == '0')
+            {
                moveCursor(leftX + x, topY);
                std::cout << "╗" << std::flush;
                moveCursor(leftX + x, topY + 1);
@@ -27,7 +30,9 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
                std::cout << "║" << std::flush;
                moveCursor(leftX + x, topY + 3);
                std::cout << "╚" << std::flush;
-            } else if (*(binary + i) == '1') {
+            }
+            else if (*(binary + i) == '1')
+            {
                moveCursor(leftX + x, topY);
                std::cout << "╔" << std::flush;
                moveCursor(leftX + x, topY + 1);
@@ -37,11 +42,16 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
                moveCursor(leftX + x, topY + 3);
                std::cout << "╝" << std::flush;
             }
-         } else {
-            if (*(binary + i) == '0') {
+         }
+         else
+         {
+            if (*(binary + i) == '0')
+            {
                moveCursor(leftX + x, topY + 3);
                std::cout << "═" << std::flush;
-            } else if (*(binary + i) == '1') {
+            }
+            else if (*(binary + i) == '1')
+            {
                moveCursor(leftX + x, topY);
                std::cout << "═" << std::flush;
             }
@@ -49,7 +59,9 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
       }
       int charX = float(currentX + lastX) / 2;
       char label[2] = {*(binary + i), '\0'};
-      coloredOutput(label, leftX + charX, topY + 5);
+      coloredOutput(label, leftX + charX, topY + 5, i);
+      moveCursor(leftX, topY + 7);
+      std::cout << "Use arrow keys (←/→) to scale chart. Current size: " << int(scale * 100) << "%";
       lastX = currentX;
    }
 }

@@ -87,6 +87,7 @@ void promptDataType()
         char label30[] = {'>', '\0'};
         printLabel(label30, 0, dataTypeIndex + 2);
         moveCursor(0, 28);
+        std::cout << "Use arrow keys (↑/↓) to choose data type and Enter to confirm choice";
         int inputKey = getch();
         if (inputKey == 91)
         {
@@ -135,7 +136,7 @@ void render()
         moveCursor(i + 16, 1);
         putchar(input[i]);
     }
-    if (isNegative)
+    if (isNegative && inputLength > 0)
     {
         moveCursor(15, 1);
         putchar('-');
@@ -147,11 +148,13 @@ void render()
         // putchar('1');
         // }
     }
-    char label4[] = {'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', ' ', 's', 'y', 'm', 'b', 'o', 'l', 's', ':', '\0'};
-    printLabel(label4, 0, 5);
+    // char label4[] = {'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', ' ', 's', 'y', 'm', 'b', 'o', 'l', 's', ':', '\0'};
+    // printLabel(label4, 0, 5);
+    moveCursor(0, 5);
+    std::cout << "Available symbols:";
     for (int i = 0; i < base; i++)
     {
-        moveCursor(i * 2, 6);
+        moveCursor((i + 1) * 2, 6);
         if (i < 10)
         {
             putchar(i + '0');
@@ -161,10 +164,39 @@ void render()
             putchar(i - 10 + 'A');
         }
     }
-    char label5[] = {'I', 'n', 'p', 'u', 't', ' ', 'n', 'u', 'm', 'b', 'e', 'r', ' ', 'b', 'a', 's', 'e', ':', '\0'};
-    printLabel(label5, 0, 7);
+    if (mayBeNegative)
+    {
+        moveCursor(0, 6);
+        putchar('-');
+    }
+    moveCursor(0, 7);
+    std::cout << "Input number base: " << base << std::flush;
     moveCursor(0, 8);
-    std::cout << base << std::flush;
+    std::cout << "Using data type: " << dataTypeNames[dataTypeIndex] << std::flush;
+
+    moveCursor(0, 24);
+    std::cout << "Use upper arrow key (↑) to setup bites inversion.";
+    moveCursor(0, 25);
+    std::cout << "Use lower arrow key (↓) to toggle decimal output animation. Animation ";
+    if (animationEnabled)
+    {
+        std::cout << "ENABLED";
+    }
+    else
+    {
+        std::cout << "DISABLED";
+    }
+
+    moveCursor(0, 27);
+    std::cout << "Use Tab to open previous (base input) screen";
+    moveCursor(0, 28);
+    std::cout << "Use Enter to restart/exit program";
+    moveCursor(0, 10);
+    std::cout << "Inverting bites from position: ";
+    std::cout << invertFrom;
+    moveCursor(0, 11);
+    std::cout << "Inverting bites count: ";
+    std::cout << invertCount;
 
     if (isInputValid)
     {
@@ -173,16 +205,18 @@ void render()
         char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
         printLabel(label3, 0, 3);
 
-        coloredOutput(binary, 16, 3);
+        coloredOutput(binary, 16, 3, 0);
 
         drawChart(binary, 0, 15, chartScaling);
 
-        if (animationEnabled) {
+        if (animationEnabled)
+        {
             showAnimatedLabel(decimal, 16, 2);
-        } else {
+        }
+        else
+        {
             printLabel(decimal, 16, 2);
         }
-
     }
 
     moveCursor(16 + inputLength, 1);
@@ -195,7 +229,14 @@ void getBase()
         std::system("clear");
         char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
         printLabel(label, 0, 0);
-        base = rangeInput(13, 0, 1, 36);
+        moveCursor(0, 3);
+        std::cout << "Use Tab to open previous screen";
+        base = rangeInput(13, 0, 2, 36, false);
+        if (base == -1)
+        {
+            step = 0;
+            return;
+        }
         step = 2;
         return;
     }
@@ -281,37 +322,28 @@ int main()
                 input[inputLength] = '.';
                 input[inputLength + 1] = '\0';
                 inputLength++;
-            } else if (inputSymbol == 91) {
+            }
+            else if (inputSymbol == 91)
+            {
                 int arrowKey = getch();
-                if (arrowKey == 67 && chartScaling < 80)
+                if (arrowKey == 67 && chartScaling < 200)
                 {
                     chartScaling++;
                 }
-                else if (arrowKey == 68  && chartScaling > 10)
+                else if (arrowKey == 68 && chartScaling > 10)
                 {
                     chartScaling--;
-                } else if (arrowKey == 66) {
+                }
+                else if (arrowKey == 66)
+                {
                     animationEnabled = !animationEnabled;
-                } else if (arrowKey == 65) {
+                }
+                else if (arrowKey == 65)
+                {
                     step = 3;
                     continue;
                 }
-            } 
-            // else
-            //  if (inputSymbol == 27) {
-            //     int secondInputSymbol = getch();
-            //     if (secondInputSymbol == 91) {
-            //         int thirdInputSymbol = getch();
-            //         if (thirdInputSymbol == 49) {
-            //             int functionKey = getch();
-            //             if (functionKey == 53) {
-            //                 animationEnabled = !animationEnabled;
-            //             }
-            //             // std::cout << "   " << functionKey << "   " << std::flush;
-            //             // sleep(5);
-            //         }
-            //     }
-            // }
+            }
             if (inputLength == floatDelimeter + 1)
             {
                 isInputValid = false;
@@ -320,11 +352,13 @@ int main()
             {
                 isInputValid = true;
             }
-        } else if (step == 3) {
+        }
+        else if (step == 3)
+        {
             moveCursor(70, 5);
             std::cout << "╔═══════════════════════════════════════════════════════════╗";
             moveCursor(70, 6);
-            std::cout << "║            Bytes inversion settings                       ║";
+            std::cout << "║            Bytes inversion setup                          ║";
             moveCursor(70, 7);
             std::cout << "║                                                           ║";
             moveCursor(70, 8);
@@ -338,9 +372,10 @@ int main()
             moveCursor(70, 12);
             std::cout << "╚═══════════════════════════════════════════════════════════╝";
 
-            invertFrom = rangeInput(79, 9, 0, varSize[dataTypeIndex] * 8);
-            invertCount = rangeInput(79, 11, 0, varSize[dataTypeIndex] * 8 - invertFrom);
-            for (int i = 5; i < 13; i++) {
+            invertFrom = rangeInput(79, 9, 0, varSize[dataTypeIndex] * 8, true);
+            invertCount = rangeInput(79, 11, 0, varSize[dataTypeIndex] * 8 - invertFrom, true);
+            for (int i = 5; i < 13; i++)
+            {
                 moveCursor(70, i);
                 std::cout << "                                                             ";
             }
