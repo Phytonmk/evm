@@ -99,4 +99,8 @@ int step = 2;
 bool isInputValid = true;
 int chartScaling = 20;
 
+bool animationEnabled = false;
+int invertFrom = 3;
+int invertCount = 5;
+
 #endif

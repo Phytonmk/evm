@@ -2,6 +2,7 @@
 #include "userConfig/userConfig.h"
 #include "getch/getch.h"
 #include "cursor/cursor.h"
+#include "rangeInput/rangeInput.h"
 #include "showAnimatedLabel/showAnimatedLabel.h"
 #include "coloredOutput/coloredOutput.h"
 #include "changeRadix/changeRadix.h"
@@ -176,7 +177,11 @@ void render()
 
         drawChart(binary, 0, 15, chartScaling);
 
-        showAnimatedLabel(decimal, 16, 2);
+        if (animationEnabled) {
+            showAnimatedLabel(decimal, 16, 2);
+        } else {
+            printLabel(decimal, 16, 2);
+        }
 
     }
 
@@ -190,45 +195,7 @@ void getBase()
         std::system("clear");
         char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
         printLabel(label, 0, 0);
-        int c = '\0';
-        int secondChar = '\0';
-        int firstChar = '\0';
-        moveCursor(13, 0);
-        while (!(firstChar >= '1' && firstChar <= '9') && firstChar != '\t')
-            firstChar = getch();
-        putchar(firstChar);
-        base = (firstChar - '0');
-        if (firstChar == '\t')
-        {
-            step = 0;
-            return;
-        }
-        moveCursor(14, 0);
-
-        if (firstChar <= '3')
-        {
-
-            while (!(secondChar >= '0' && ((firstChar == '3' && secondChar <= '6') || (firstChar != '3' && secondChar <= '9'))) && (secondChar != '\n' || base == 1) && secondChar != '\t' && secondChar != 127)
-                secondChar = getch();
-            if (secondChar == '\t')
-            {
-                step = 0;
-                return;
-            }
-            if (secondChar == '\n')
-            {
-                step = 2;
-                return;
-            }
-            if (secondChar == 127)
-            {
-                // return;
-            }
-            putchar(secondChar);
-            base = (firstChar - '0') * 10 + (secondChar - '0');
-        }
-        while (getch() != '\n')
-            ;
+        base = rangeInput(13, 0, 1, 36);
         step = 2;
         return;
     }
@@ -323,8 +290,28 @@ int main()
                 else if (arrowKey == 68  && chartScaling > 10)
                 {
                     chartScaling--;
+                } else if (arrowKey == 66) {
+                    animationEnabled = !animationEnabled;
+                } else if (arrowKey == 65) {
+                    step = 3;
+                    continue;
                 }
-            }
+            } 
+            // else
+            //  if (inputSymbol == 27) {
+            //     int secondInputSymbol = getch();
+            //     if (secondInputSymbol == 91) {
+            //         int thirdInputSymbol = getch();
+            //         if (thirdInputSymbol == 49) {
+            //             int functionKey = getch();
+            //             if (functionKey == 53) {
+            //                 animationEnabled = !animationEnabled;
+            //             }
+            //             // std::cout << "   " << functionKey << "   " << std::flush;
+            //             // sleep(5);
+            //         }
+            //     }
+            // }
             if (inputLength == floatDelimeter + 1)
             {
                 isInputValid = false;
@@ -333,6 +320,31 @@ int main()
             {
                 isInputValid = true;
             }
+        } else if (step == 3) {
+            moveCursor(70, 5);
+            std::cout << "╔═══════════════════════════════════════════════════════════╗";
+            moveCursor(70, 6);
+            std::cout << "║            Bytes inversion settings                       ║";
+            moveCursor(70, 7);
+            std::cout << "║                                                           ║";
+            moveCursor(70, 8);
+            std::cout << "║    Invert bites from position                             ║";
+            moveCursor(70, 9);
+            std::cout << "║      >                                                    ║";
+            moveCursor(70, 10);
+            std::cout << "║    How many bites to invert                               ║";
+            moveCursor(70, 11);
+            std::cout << "║      >                                                    ║";
+            moveCursor(70, 12);
+            std::cout << "╚═══════════════════════════════════════════════════════════╝";
+
+            invertFrom = rangeInput(79, 9, 0, varSize[dataTypeIndex] * 8);
+            invertCount = rangeInput(79, 11, 0, varSize[dataTypeIndex] * 8 - invertFrom);
+            for (int i = 5; i < 13; i++) {
+                moveCursor(70, i);
+                std::cout << "                                                             ";
+            }
+            step = 2;
         }
     }
     return 0;
