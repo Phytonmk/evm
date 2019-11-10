@@ -2,6 +2,7 @@
 #include "userConfig/userConfig.h"
 #include "getch/getch.h"
 #include "cursor/cursor.h"
+#include "showAnimatedLabel/showAnimatedLabel.h"
 #include "changeRadix/changeRadix.h"
 #include <iostream>
 
@@ -13,8 +14,6 @@ void printLabel(char label[], int x, int y)
         putchar(label[i]);
     }
 }
-
-int step = 0;
 
 int maxDataType = 24;
 void promptDataType()
@@ -116,9 +115,6 @@ void promptDataType()
     }
 }
 
-int inputLength = 0;
-
-bool isInputValid = false;
 void render()
 {
     std::system("clear");
@@ -135,26 +131,6 @@ void render()
     {
         moveCursor(i + 16, 1);
         putchar(input[i]);
-    }
-    if (isInputValid)
-    {
-        char label2[] = {'D', 'e', 'c', 'i', 'm', 'a', 'l', ':', ' ', '\0'};
-        printLabel(label2, 0, 2);
-
-        for (int i = 0; i < decimal[i] != '\0'; i++)
-        {
-            moveCursor(i + 16, 2);
-            putchar(decimal[i]);
-        }
-        char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
-        printLabel(label3, 0, 3);
-        moveCursor(16, 3);
-        std::cout << binary;
-        // for (int i = 0; binary[i] != '\0'; i++)
-        // {
-        //     moveCursor(i + 16, 3);
-        //     putchar(binary[i]);
-        // }
     }
     if (isNegative)
     {
@@ -185,47 +161,82 @@ void render()
     char label5[] = {'I', 'n', 'p', 'u', 't', ' ', 'n', 'u', 'm', 'b', 'e', 'r', ' ', 'b', 'a', 's', 'e', ':', '\0'};
     printLabel(label5, 0, 7);
     moveCursor(0, 8);
-    std::cout << base;
+    std::cout << base << std::flush;
+
+    if (isInputValid)
+    {
+        char label2[] = {'D', 'e', 'c', 'i', 'm', 'a', 'l', ':', ' ', '\0'};
+        printLabel(label2, 0, 2);
+        char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
+        printLabel(label3, 0, 3);
+
+        moveCursor(16, 3);
+        std::cout << binary << std::flush;
+        showAnimatedLabel(decimal, 16, 2);
+        // for (int i = 0; i < decimal[i] != '\0'; i++)
+        // {
+        //     moveCursor(i + 16, 2);
+        //     printChar(decimal[i], i + 16, 2);
+        // }
+        // for (int i = 0; binary[i] != '\0'; i++)
+        // {
+        //     moveCursor(i + 16, 3);
+        //     putchar(binary[i]);
+        // }
+    }
 
     moveCursor(16 + inputLength, 1);
 }
 
 void getBase()
 {
-    std::system("clear");
-    char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
-    printLabel(label, 0, 0);
-    int c = '\0';
-    int secondChar = '\0';
-    int firstChar = '\0';
-    moveCursor(13, 0);
-    while (!(firstChar >= '1' && firstChar <= '9') && firstChar != '\t')
-        firstChar = getch();
-    putchar(firstChar);
-    base = (firstChar - '0');
-    if (firstChar == '\t')
+    while (true)
     {
-        step = 0;
-        return;
-    }
-    moveCursor(14, 0);
+        std::system("clear");
+        char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
+        printLabel(label, 0, 0);
+        int c = '\0';
+        int secondChar = '\0';
+        int firstChar = '\0';
+        moveCursor(13, 0);
+        while (!(firstChar >= '1' && firstChar <= '9') && firstChar != '\t')
+            firstChar = getch();
+        putchar(firstChar);
+        base = (firstChar - '0');
+        if (firstChar == '\t')
+        {
+            step = 0;
+            return;
+        }
+        moveCursor(14, 0);
 
-    while (!(secondChar >= '0' && ((firstChar == '3' && secondChar <= '6') || (firstChar != '3' && secondChar <= '9'))) && (secondChar != '\n' || base == 1) && secondChar != '\t')
-        secondChar = getch();
-    if (secondChar == '\t')
-    {
-        step = 0;
+        if (firstChar <= '3')
+        {
+
+            while (!(secondChar >= '0' && ((firstChar == '3' && secondChar <= '6') || (firstChar != '3' && secondChar <= '9'))) && (secondChar != '\n' || base == 1) && secondChar != '\t' && secondChar != 127)
+                secondChar = getch();
+            if (secondChar == '\t')
+            {
+                step = 0;
+                return;
+            }
+            if (secondChar == '\n')
+            {
+                step = 2;
+                return;
+            }
+            if (secondChar == 127)
+            {
+                // return;
+            }
+            putchar(secondChar);
+            base = (firstChar - '0') * 10 + (secondChar - '0');
+        }
+        while (getch() != '\n')
+            ;
+        step = 2;
         return;
     }
-    if (secondChar == '\n')
-    {
-        return;
-    }
-    putchar(secondChar);
-    base = (firstChar - '0') * 10 + (secondChar - '0');
-    while (getch() != '\n')
-        ;
-    step = 2;
 }
 
 int main()
@@ -273,12 +284,11 @@ int main()
                 if (inputSymbol == 'r')
                 {
                     step = 0;
-                    continue;
                 }
                 else
                 {
                     std::system("clear");
-                    break;
+                    return 0; /*  */
                 }
             }
             else if (inputSymbol == 127)

@@ -86,13 +86,16 @@ short varSize[] = {
     sizeof(double),
 };
 
-short dataTypeIndex = 0;
+short dataTypeIndex = 5;
 
 bool mayBeNegative = true;
 bool mayBeFloat = true;
 
-short base = 36;
-char input[10000] = {'\0'};
-bool isNegative = true;
+short base = 10;
+int inputLength = 0;
+char input[10000] = {'0', '0', '0', '\0'};
+bool isNegative = false;
+int step = 2;
+bool isInputValid = true;
 
 #endif

@@ -237,6 +237,8 @@ void changeRadix(char messySrc[], char decimalDest[], char binaryDest[])
 
     std::stringstream ioStream;
 
+    ioStream.precision(16);
+
     if (dataTypeIndex == 0)
     {
         ioStream << decimalValue.sys << ':' << decimalValue.type0;
@@ -345,101 +347,5 @@ void changeRadix(char messySrc[], char decimalDest[], char binaryDest[])
     for (int i = 0; i < binaryLength; i++)
     {
         *(binaryDest + binaryLength - i - 1) = ((decimalValue.sys >> i) & 0x1) == 1 ? '1' : '0';
-        // if (dataTypeIndex == 0)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type0 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 1)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type1 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 2)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type2 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 3)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type3 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 4)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type4 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 5)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type5 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 6)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type6 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 7)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type7 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 8)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type8 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 9)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type9 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 10)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type10 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 11)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type11 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 12)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type12 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 13)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type13 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 14)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type14 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 15)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type15 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 16)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type16 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 17)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type17 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 18)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type18 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 19)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type19 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 20)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type20 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 21)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type21 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 22)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.type22 & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
-        // else if (dataTypeIndex == 23 || dataTypeIndex == 24)
-        // {
-        //     *(binaryDest + i) = ((decimalValue.sys & (1 << i)) >> i) == 1 ? '1' : '0';
-        // }
     }
 }
