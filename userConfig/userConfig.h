@@ -93,9 +93,10 @@ bool mayBeFloat = true;
 
 short base = 10;
 int inputLength = 0;
-char input[10000] = {'0', '0', '0', '\0'};
+char input[10000] = {'1', '2', '3', '\0'};
 bool isNegative = false;
 int step = 2;
 bool isInputValid = true;
+int chartScaling = 20;
 
 #endif

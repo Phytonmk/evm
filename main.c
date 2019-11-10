@@ -5,6 +5,7 @@
 #include "showAnimatedLabel/showAnimatedLabel.h"
 #include "coloredOutput/coloredOutput.h"
 #include "changeRadix/changeRadix.h"
+#include "chart/chart.h"
 #include <iostream>
 
 void printLabel(char label[], int x, int y)
@@ -172,17 +173,11 @@ void render()
         printLabel(label3, 0, 3);
 
         coloredOutput(binary, 16, 3);
+
+        drawChart(binary, 0, 15, chartScaling);
+
         showAnimatedLabel(decimal, 16, 2);
-        // for (int i = 0; i < decimal[i] != '\0'; i++)
-        // {
-        //     moveCursor(i + 16, 2);
-        //     printChar(decimal[i], i + 16, 2);
-        // }
-        // for (int i = 0; binary[i] != '\0'; i++)
-        // {
-        //     moveCursor(i + 16, 3);
-        //     putchar(binary[i]);
-        // }
+
     }
 
     moveCursor(16 + inputLength, 1);
@@ -319,6 +314,16 @@ int main()
                 input[inputLength] = '.';
                 input[inputLength + 1] = '\0';
                 inputLength++;
+            } else if (inputSymbol == 91) {
+                int arrowKey = getch();
+                if (arrowKey == 67 && chartScaling < 80)
+                {
+                    chartScaling++;
+                }
+                else if (arrowKey == 68  && chartScaling > 10)
+                {
+                    chartScaling--;
+                }
             }
             if (inputLength == floatDelimeter + 1)
             {

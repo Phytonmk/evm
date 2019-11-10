@@ -16,7 +16,15 @@ void showAnimatedLabel(char *label, int targetXStart, int targetYStart)
     while (*(label + originalLabelLength) != '\0')
         originalLabelLength++;
 
-    if (originalLabelLength < prevLabelLength)
+    struct winsize windowSize;
+    ioctl(STDOUT_FILENO, TIOCGWINSZ, &windowSize);
+
+    int nonUniqueSymbolsCount = 0;
+    int i;
+    for (i = 0; prevLabel[i] != '\0' && prevLabel[i] == *(label + i); i++)
+        nonUniqueSymbolsCount++;
+    
+    if (originalLabelLength <= nonUniqueSymbolsCount)
     {
         moveCursor(targetXStart, targetYStart);
         std::cout << label << std::flush;
@@ -25,17 +33,11 @@ void showAnimatedLabel(char *label, int targetXStart, int targetYStart)
         {
             *(prevLabel + i) = *(label + i);
         }
+
         *(prevLabel + i) = '\0';
         return;
     }
 
-    struct winsize windowSize;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &windowSize);
-
-    int nonUniqueSymbolsCount = 0;
-    int i;
-    for (i = 0; prevLabel[i] != '\0' && prevLabel[i] == *(label + i); i++)
-        nonUniqueSymbolsCount++;
     char prevLabelOutput[10000] = {'\0'};
     for (i = 0; i < nonUniqueSymbolsCount; i++)
         prevLabelOutput[i] = prevLabel[i];
