@@ -36,7 +36,14 @@ int rangeInput(int x, int y, int from, int to, bool echo)
         std::cout << "    " << std::flush;
         if (maxInput == -1 && minInput == 10)
         {
-            std::cout << "(press enter to continue)" << std::flush;
+            if (value >= from && value <= to)
+            {
+                std::cout << "(press enter to continue)" << std::flush;
+            }
+            else
+            {
+                std::cout << "(must be " << from << "-" << to << ")";
+            }
         }
         else
         {
@@ -63,6 +70,8 @@ int rangeInput(int x, int y, int from, int to, bool echo)
         else if (inputSymbol == 127)
         {
             value /= 10;
+            if (value == 0)
+                touched = false;
         }
         else if (inputSymbol == '\n' && value >= from && value <= to)
         {

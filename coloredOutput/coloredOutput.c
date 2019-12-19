@@ -1,7 +1,7 @@
 #include "../cursor/cursor.h"
 #include <iostream>
 
-void coloredOutput(char *label, int x, int y, int charIndex)
+void coloredOutput(char *label, int x, int y, int charIndex, int length)
 {
     char output[10000] = {'\0'};
     int outputLength = 0;
@@ -15,7 +15,7 @@ void coloredOutput(char *label, int x, int y, int charIndex)
         outputLength++;
         output[outputLength] = ';';
         outputLength++;
-        if (charIndex + i >= invertFrom && charIndex + i < invertFrom + invertCount)
+        if ((charIndex + i) >= (length - invertFrom - invertCount) && (charIndex + i) < (length - invertFrom))
         {
 
             output[outputLength] = '3';

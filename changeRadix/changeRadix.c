@@ -29,6 +29,11 @@ void extractMantissa(char src[], char dist[], int *mantissa)
     }
 }
 
+const int returnArg(int i)
+{
+    return i;
+}
+
 int getValueLength(unsigned long long value, int base)
 {
     if (value == 0)
@@ -46,7 +51,11 @@ void changeRadix(char messySrc[], char decimalDest[], char binaryDest[])
 
     for (int i = 0; *(src + i) != '\0'; i++)
     {
-        length++;
+
+        int one = 1;
+        __asm__(
+            "add %0, %1\n\t"
+            : "+r"(one), "+r"(length));
     }
 
     union {
@@ -235,11 +244,9 @@ void changeRadix(char messySrc[], char decimalDest[], char binaryDest[])
         }
     }
 
-    // int a = varSize[dataTypeIndex];
-    // int b = varSize[dataTypeIndex] - invertFrom;
-    // int c = varSize[dataTypeIndex] - invertFrom - invertCount;
     int bitesCount = varSize[dataTypeIndex] * 8;
-    for (int i = bitesCount - invertFrom - 1; i > bitesCount - invertFrom - invertCount - 1; i--) {
+    for (int i = invertFrom; i < invertFrom + invertCount && i < bitesCount; i++)
+    {
         decimalValue.sys ^= 1UL << i;
     }
 

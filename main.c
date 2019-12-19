@@ -154,7 +154,7 @@ void render()
     std::cout << "Available symbols:";
     for (int i = 0; i < base; i++)
     {
-        moveCursor((i + 1) * 2, 6);
+        moveCursor((i + 2) * 2, 6);
         if (i < 10)
         {
             putchar(i + '0');
@@ -166,8 +166,13 @@ void render()
     }
     if (mayBeNegative)
     {
-        moveCursor(0, 6);
+        moveCursor(2, 6);
         putchar('-');
+    }
+    if (mayBeFloat)
+    {
+        moveCursor(0, 6);
+        putchar('.');
     }
     moveCursor(0, 7);
     std::cout << "Input number base: " << base << std::flush;
@@ -205,7 +210,10 @@ void render()
         char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
         printLabel(label3, 0, 3);
 
-        coloredOutput(binary, 16, 3, 0);
+        int binaryLength;
+        while (binary[binaryLength] != '\0')
+            binaryLength++;
+        coloredOutput(binary, 16, 3, 0, binaryLength);
 
         drawChart(binary, 0, 15, chartScaling);
 
@@ -244,6 +252,7 @@ void getBase()
 
 int main()
 {
+
     char inputSymbol = '0';
     int floatDelimeter = -1;
 
@@ -344,6 +353,10 @@ int main()
                     continue;
                 }
             }
+            else
+            {
+                // std::cout << "\a";
+            }
             if (inputLength == floatDelimeter + 1)
             {
                 isInputValid = false;
@@ -373,7 +386,17 @@ int main()
             std::cout << "╚═══════════════════════════════════════════════════════════╝";
 
             invertFrom = rangeInput(79, 9, 0, varSize[dataTypeIndex] * 8, true);
+            if (invertFrom == -1)
+            {
+                step = 1;
+                continue;
+            }
             invertCount = rangeInput(79, 11, 0, varSize[dataTypeIndex] * 8 - invertFrom, true);
+            if (invertCount == -1)
+            {
+                step = 1;
+                continue;
+            }
             for (int i = 5; i < 13; i++)
             {
                 moveCursor(70, i);

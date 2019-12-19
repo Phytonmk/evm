@@ -7,7 +7,12 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
    float scale = float(scalingKey) / 20;
    int length = 0;
    while (*(binary + length) != '\0')
-      length++;
+   {
+      int one = 1;
+      __asm__(
+          "add %0, %1\n\t"
+          : "+r"(one), "+r"(length));
+   }
 
    if (length == 0)
       return;
@@ -59,7 +64,7 @@ void drawChart(char *binary, int leftX, int topY, int scalingKey)
       }
       int charX = float(currentX + lastX) / 2;
       char label[2] = {*(binary + i), '\0'};
-      coloredOutput(label, leftX + charX, topY + 5, i);
+      coloredOutput(label, leftX + charX, topY + 5, i, length);
       moveCursor(leftX, topY + 7);
       std::cout << "Use arrow keys (←/→) to scale chart. Current size: " << int(scale * 100) << "%";
       lastX = currentX;
