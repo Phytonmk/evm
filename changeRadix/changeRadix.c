@@ -245,10 +245,6 @@ void changeRadix(char messySrc[], char decimalDest[], char binaryDest[])
     }
 
     int bitesCount = varSize[dataTypeIndex] * 8;
-    for (int i = invertFrom; i < invertFrom + invertCount && i < bitesCount; i++)
-    {
-        decimalValue.sys ^= 1UL << i;
-    }
 
     std::stringstream ioStream;
 

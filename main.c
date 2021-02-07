@@ -3,10 +3,7 @@
 #include "getch/getch.h"
 #include "cursor/cursor.h"
 #include "rangeInput/rangeInput.h"
-#include "showAnimatedLabel/showAnimatedLabel.h"
-#include "coloredOutput/coloredOutput.h"
 #include "changeRadix/changeRadix.h"
-#include "chart/chart.h"
 #include <iostream>
 
 void printLabel(char label[], int x, int y)
@@ -21,110 +18,80 @@ void printLabel(char label[], int x, int y)
 int maxDataType = 24;
 void promptDataType()
 {
-    while (true)
-    {
         std::system("clear");
-        char emptyString[] = {' ', '\0'};
-        for (int x = 0; x < 50; x++)
-        {
-            for (int y = 0; y < 50; y++)
-            {
-                printLabel(emptyString, x, y);
-            }
-        }
-        char label0[] = {'S', 'e', 'l', 'e', 'c', 't', ' ', 'd', 'a', 't', 'a', ' ', 't', 'y', 'p', 'e', ':', '\0'};
+        char label0[] = { 'S', 'e', 'l', 'e', 'c', 't', ' ', 'd', 'a', 't', 'a', ' ', 't', 'y', 'p', 'e', ':', '\0'};
         printLabel(label0, 0, 0);
-        char label1[] = {'c', 'h', 'a', 'r', '\0'};
+        char label1[] = {'1', ':', ' ', 'c', 'h', 'a', 'r', '\0'};
         printLabel(label1, 2, 2);
-        char label2[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'c', 'h', 'a', 'r', '\0'};
+        char label2[] = {'2', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'c', 'h', 'a', 'r', '\0'};
         printLabel(label2, 2, 3);
-        char label4[] = {'s', 'h', 'o', 'r', 't', '\0'};
-        printLabel(label4, 2, 4);
-        char label5[] = {'s', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label5, 2, 5);
-        char label6[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', '\0'};
-        printLabel(label6, 2, 6);
-        char label7[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label7, 2, 7);
-        char label8[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', '\0'};
-        printLabel(label8, 2, 8);
-        char label9[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label9, 2, 9);
-        char label10[] = {'i', 'n', 't', '\0'};
-        printLabel(label10, 2, 10);
-        char label12[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label12, 2, 11);
-        char label14[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label14, 2, 12);
-        char label15[] = {'l', 'o', 'n', 'g', '\0'};
-        printLabel(label15, 2, 13);
-        char label16[] = {'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label16, 2, 14);
-        char label17[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', '\0'};
-        printLabel(label17, 2, 15);
-        char label18[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label18, 2, 16);
-        char label19[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', '\0'};
-        printLabel(label19, 2, 17);
-        char label20[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label20, 2, 18);
-        char label21[] = {'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
-        printLabel(label21, 2, 19);
-        char label22[] = {'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label22, 2, 20);
-        char label23[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
-        printLabel(label23, 2, 21);
-        char label24[] = {'s', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label24, 2, 22);
-        char label25[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
-        printLabel(label25, 2, 23);
-        char label26[] = {'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
-        printLabel(label26, 2, 24);
-        char label27[] = {'f', 'l', 'o', 'a', 't', '\0'};
-        printLabel(label27, 2, 25);
-        char label28[] = {'d', 'o', 'u', 'b', 'l', 'e', '\0'};
-        printLabel(label28, 2, 26);
-        char label30[] = {'>', '\0'};
-        printLabel(label30, 0, dataTypeIndex + 2);
-        moveCursor(0, 28);
-        std::cout << "Use arrow keys (↑/↓) to choose data type and Enter to confirm choice";
-        int inputKey = getch();
-        if (inputKey == 91)
-        {
-            int arrowKey = getch();
-            if (arrowKey == 66)
-            {
-                dataTypeIndex++;
-                if (dataTypeIndex > maxDataType)
-                {
-                    dataTypeIndex = 0;
-                }
-            }
-            else if (arrowKey == 65)
-            {
-                dataTypeIndex--;
-                if (dataTypeIndex < 0)
-                {
-                    dataTypeIndex = maxDataType;
-                }
-            }
-        }
+        char label3[] = {'3', ':', ' ', 's', 'h', 'o', 'r', 't', '\0'};
+        printLabel(label3, 2, 4);
+        char label4[] = {'4', ':', ' ', 's', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label4, 2, 5);
+        char label5[] = {'5', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', '\0'};
+        printLabel(label5, 2, 6);
+        char label6[] = {'6', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label6, 2, 7);
+        char label7[] = {'7', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', '\0'};
+        printLabel(label7, 2, 8);
+        char label8[] = {'8', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 's', 'h', 'o', 'r', 't', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label8, 2, 9);
+        char label9[] = {'9', ':', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label9, 2, 10);
+        char label10[] = {'1', '0', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label10, 2, 11);
+        char label11[] = {'1', '1', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label11, 2, 12);
+        char label12[] = {'1', '2', ':', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label12, 2, 13);
+        char label13[] = {'1', '3', ':', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label13, 2, 14);
+        char label14[] = {'1', '4', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label14, 20, 2);
+        char label15[] = {'1', '5', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label15, 20, 3);
+        char label16[] = {'1', '6', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label16, 20, 4);
+        char label17[] = {'1', '7', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label17, 20, 5);
+        char label18[] = {'1', '8', ':', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label18, 20, 6);
+        char label19[] = {'1', '9', ':', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label19, 20, 7);
+        char label20[] = {'2', '0', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label20, 20, 8);
+        char label21[] = {'2', '1', ':', ' ', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label21, 20, 9);
+        char label22[] = {'2', '2', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', '\0'};
+        printLabel(label22, 20, 10);
+        char label23[] = {'2', '3', ':', ' ', 'u', 'n', 's', 'i', 'g', 'n', 'e', 'd', ' ', 'l', 'o', 'n', 'g', ' ', 'l', 'o', 'n', 'g', ' ', 'i', 'n', 't', '\0'};
+        printLabel(label23, 20, 11);
+        char label24[] = {'2', '4', ':', ' ', 'f', 'l', 'o', 'a', 't', '\0'};
+        printLabel(label24, 20, 12);
+        char label25[] = {'2', '5', ':', ' ', 'd', 'o', 'u', 'b', 'l', 'e', '\0'};
+        printLabel(label25, 20, 13);
+
+        char label30[] = {'E', 'n', 't', 'e', 'r', ' ', 't', 'h', 'e', ' ', 'd', 'a', 't', 'a', ' ', 't', 'y', 'p', 'e', ':', ' ', '\0'};
+        printLabel(label30, 2, 16);
+
+        dataTypeIndex = rangeInput(2, 17, 1, 25, true);
+
+        char emptyString[] = {' ',' ',' ',' ',' ',' ',' ',' ',' ', ' ', ' ', ' ', ' ', '\0'};
+        printLabel(emptyString, 2, 17);
+
         mayBeNegative = isNegativeMap[dataTypeIndex];
         mayBeFloat = isFloatMap[dataTypeIndex];
-        if (inputKey == '\n')
-        {
-            step = 1;
-            return;
-        }
-    }
+        step = 1;
 }
 
-void render()
+char decimal[10000] = {'\0'};
+char binary[10000] = {'\0'};
+
+void prompt()
 {
     std::system("clear");
 
-    char decimal[10000] = {'\0'};
-    char binary[10000] = {'\0'};
     moveCursor(0, 10);
 
     changeRadix(input, decimal, binary);
@@ -140,16 +107,7 @@ void render()
     {
         moveCursor(15, 1);
         putchar('-');
-        // if (isInputValid)
-        // {
-        //     moveCursor(15, 2);
-        //     putchar('-');
-        // moveCursor(16, 3);
-        // putchar('1');
-        // }
     }
-    // char label4[] = {'A', 'v', 'a', 'i', 'l', 'a', 'b', 'l', 'e', ' ', 's', 'y', 'm', 'b', 'o', 'l', 's', ':', '\0'};
-    // printLabel(label4, 0, 5);
     moveCursor(0, 5);
     std::cout << "Available symbols:";
     for (int i = 0; i < base; i++)
@@ -179,75 +137,47 @@ void render()
     moveCursor(0, 8);
     std::cout << "Using data type: " << dataTypeNames[dataTypeIndex] << std::flush;
 
-    moveCursor(0, 24);
-    std::cout << "Use upper arrow key (↑) to setup bites inversion.";
-    moveCursor(0, 25);
-    std::cout << "Use lower arrow key (↓) to toggle decimal output animation. Animation ";
-    if (animationEnabled)
-    {
-        std::cout << "ENABLED";
-    }
-    else
-    {
-        std::cout << "DISABLED";
-    }
-
     moveCursor(0, 27);
     std::cout << "Use Tab to open previous (base input) screen";
     moveCursor(0, 28);
     std::cout << "Use Enter to restart/exit program";
     moveCursor(0, 10);
-    std::cout << "Inverting bites from position: ";
-    std::cout << invertFrom;
-    moveCursor(0, 11);
-    std::cout << "Inverting bites count: ";
-    std::cout << invertCount;
 
-    if (isInputValid)
-    {
-        char label2[] = {'D', 'e', 'c', 'i', 'm', 'a', 'l', ':', ' ', '\0'};
-        printLabel(label2, 0, 2);
-        char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
-        printLabel(label3, 0, 3);
-
-        int binaryLength;
-        while (binary[binaryLength] != '\0')
-            binaryLength++;
-        coloredOutput(binary, 16, 3, 0, binaryLength);
-
-        drawChart(binary, 0, 15, chartScaling);
-
-        if (animationEnabled)
-        {
-            showAnimatedLabel(decimal, 16, 2);
-        }
-        else
-        {
-            printLabel(decimal, 16, 2);
-        }
-    }
 
     moveCursor(16 + inputLength, 1);
 }
 
+void renderResult() {
+    char label2[] = {'D', 'e', 'c', 'i', 'm', 'a', 'l', ':', ' ', '\0'};
+    printLabel(label2, 0, 2);
+    char label3[] = {'B', 'i', 'n', 'a', 'r', 'y', ':', ' ', '\0'};
+    printLabel(label3, 0, 3);
+
+    int binaryLength = 0;
+    while (binary[binaryLength] != '\0')
+        binaryLength++;
+
+       
+    printLabel(binary, 16, 3);
+
+    printLabel(decimal, 16, 2);
+}
+
 void getBase()
 {
-    while (true)
+    std::system("clear");
+    char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
+    printLabel(label, 0, 0);
+    moveCursor(0, 3);
+    std::cout << "Use Tab to open previous screen";
+    base = rangeInput(13, 0, 2, 36, false);
+    if (base == -1)
     {
-        std::system("clear");
-        char label[] = {'I', 'n', 'p', 'u', 't', ' ', 'b', 'a', 's', 'e', ':', ' ', '\0'};
-        printLabel(label, 0, 0);
-        moveCursor(0, 3);
-        std::cout << "Use Tab to open previous screen";
-        base = rangeInput(13, 0, 2, 36, false);
-        if (base == -1)
-        {
-            step = 0;
-            return;
-        }
-        step = 2;
+        step = 0;
         return;
     }
+    step = 2;
+    return;
 }
 
 int main()
@@ -266,9 +196,11 @@ int main()
         if (step == 0)
         {
             promptDataType();
+            std::system("clear");
         }
         else if (step == 1)
         {
+            std::system("clear");
             getBase();
             inputLength = 0;
             input[0] = '\0';
@@ -278,7 +210,7 @@ int main()
         }
         else if (step == 2)
         {
-            render();
+            prompt();
             inputSymbol = getch();
             if (inputSymbol == '\t')
             {
@@ -288,20 +220,9 @@ int main()
             }
             else if (inputSymbol == '\n')
             {
-                std::system("clear");
-                moveCursor(0, 0);
-                std::cout << "Restart/Exit (r/e)? ";
-                while (inputSymbol != 'r' && inputSymbol != 'e')
-                    inputSymbol = getch();
-                if (inputSymbol == 'r')
-                {
-                    step = 0;
-                }
-                else
-                {
-                    std::system("clear");
-                    return 0; /*  */
-                }
+               if (isInputValid) {
+                   step = 3;
+               }
             }
             else if (inputSymbol == 127)
             {
@@ -332,31 +253,6 @@ int main()
                 input[inputLength + 1] = '\0';
                 inputLength++;
             }
-            else if (inputSymbol == 91)
-            {
-                int arrowKey = getch();
-                if (arrowKey == 67 && chartScaling < 200)
-                {
-                    chartScaling++;
-                }
-                else if (arrowKey == 68 && chartScaling > 10)
-                {
-                    chartScaling--;
-                }
-                else if (arrowKey == 66)
-                {
-                    animationEnabled = !animationEnabled;
-                }
-                else if (arrowKey == 65)
-                {
-                    step = 3;
-                    continue;
-                }
-            }
-            else
-            {
-                // std::cout << "\a";
-            }
             if (inputLength == floatDelimeter + 1)
             {
                 isInputValid = false;
@@ -365,44 +261,27 @@ int main()
             {
                 isInputValid = true;
             }
-        }
-        else if (step == 3)
+        } if (step == 3)
         {
-            moveCursor(70, 5);
-            std::cout << "╔═══════════════════════════════════════════════════════════╗";
-            moveCursor(70, 6);
-            std::cout << "║            Bytes inversion setup                          ║";
-            moveCursor(70, 7);
-            std::cout << "║                                                           ║";
-            moveCursor(70, 8);
-            std::cout << "║    Invert bites from position                             ║";
-            moveCursor(70, 9);
-            std::cout << "║      >                                                    ║";
-            moveCursor(70, 10);
-            std::cout << "║    How many bites to invert                               ║";
-            moveCursor(70, 11);
-            std::cout << "║      >                                                    ║";
-            moveCursor(70, 12);
-            std::cout << "╚═══════════════════════════════════════════════════════════╝";
-
-            invertFrom = rangeInput(79, 9, 0, varSize[dataTypeIndex] * 8, true);
-            if (invertFrom == -1)
+            renderResult();
+            inputSymbol = getch();
+            if (inputSymbol == '\n')
             {
-                step = 1;
-                continue;
+                std::system("clear");
+                moveCursor(0, 0);
+                std::cout << "Restart/Exit (r/e)? ";
+                while (inputSymbol != 'r' && inputSymbol != 'e')
+                    inputSymbol = getch();
+                if (inputSymbol == 'r')
+                {
+                    step = 0;
+                }
+                else
+                {
+                    std::system("clear");
+                    return 0; /*  */
+                }
             }
-            invertCount = rangeInput(79, 11, 0, varSize[dataTypeIndex] * 8 - invertFrom, true);
-            if (invertCount == -1)
-            {
-                step = 1;
-                continue;
-            }
-            for (int i = 5; i < 13; i++)
-            {
-                moveCursor(70, i);
-                std::cout << "                                                             ";
-            }
-            step = 2;
         }
     }
     return 0;

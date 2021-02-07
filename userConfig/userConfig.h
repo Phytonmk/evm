@@ -129,9 +129,4 @@ int inputLength = 0;
 int step = 0;
 bool isInputValid = false;
 
-int chartScaling = 20;
-bool animationEnabled = false;
-int invertFrom = 0;
-int invertCount = 0;
-
 #endif
